@@ -820,7 +820,8 @@ p { line-height: 1.7; }
 .step {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   position: relative;
 }
 
@@ -1456,4 +1457,28 @@ p { line-height: 1.7; }
   :root { --container-pad: var(--space-8); }
   .hero-headline { font-size: var(--fs-5xl); }
   .hero { padding: var(--space-20) 0 var(--space-24); }
+}
+
+/* ── Mobile: Getting Started Is Easy ── */
+@media (max-width: 768px) {
+  .how {
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .how-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .step {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+  .how-cta .btn {
+    width: 100%;
+    max-width: 300px;
+  }
 }
