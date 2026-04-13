@@ -356,6 +356,12 @@ p { line-height: 1.7; }
   flex-shrink: 0;
 }
 
+.header-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
 .header-logo-icon {
   display: flex;
   align-items: center;
@@ -1477,10 +1483,10 @@ p { line-height: 1.7; }
 /* ── Mobile: Getting Started Is Easy ── */
 @media (max-width: 767px) {
   /* Hide logo and hamburger on mobile — show only the Enroll Now button */
-  .header-logo { display: none; }
   .hamburger   { display: none; }
   .nav         { display: none; }
-  .header-inner { justify-content: center; }
+  .header-inner { justify-content: space-between; }
+  .header-logo-img { height: 44px; }
 
   .how .container {
     text-align: center;
