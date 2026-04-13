@@ -1476,6 +1476,12 @@ p { line-height: 1.7; }
 
 /* ── Mobile: Getting Started Is Easy ── */
 @media (max-width: 767px) {
+  /* Hide logo and hamburger on mobile — show only the Enroll Now button */
+  .header-logo { display: none; }
+  .hamburger   { display: none; }
+  .nav         { display: none; }
+  .header-inner { justify-content: center; }
+
   .how .container {
     text-align: center;
   }
