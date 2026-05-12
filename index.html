@@ -14,6 +14,9 @@
 </head>
 <body>
 
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
   <!-- Skip to main content (accessibility) -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
@@ -65,6 +68,8 @@
 
     <!-- ── HERO ─────────────────────────────────────────── -->
     <section class="hero" id="hero" aria-label="Hero">
+      <!-- Floating educational particles (JS-populated) -->
+      <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
       <div class="container hero-inner">
 
         <!-- Left: copy -->
@@ -119,7 +124,7 @@
                 </svg>
               </div>
               <div class="hero-float-text">
-                <strong>94%</strong>
+                <strong><span class="counter" data-target="94">0</span>%</strong>
                 <span>Students improve</span>
               </div>
             </div>
@@ -156,7 +161,7 @@
         <div class="why-grid">
 
           <!-- Card 1 -->
-          <div class="card why-card fade-in">
+          <div class="card why-card tilt-card fade-in">
             <div class="icon-circle" aria-hidden="true">
               <!-- Person + lightbulb (personalized) -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -173,7 +178,7 @@
           </div>
 
           <!-- Card 2 -->
-          <div class="card why-card fade-in">
+          <div class="card why-card tilt-card fade-in">
             <div class="icon-circle" aria-hidden="true">
               <!-- Star / confidence -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -188,7 +193,7 @@
           </div>
 
           <!-- Card 3 -->
-          <div class="card why-card fade-in">
+          <div class="card why-card tilt-card fade-in">
             <div class="icon-circle" aria-hidden="true">
               <!-- Graduation cap -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -205,7 +210,7 @@
           </div>
 
           <!-- Card 4 -->
-          <div class="card why-card fade-in">
+          <div class="card why-card tilt-card fade-in">
             <div class="icon-circle" aria-hidden="true">
               <!-- Calendar / clock -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -238,23 +243,31 @@
         <div class="how-steps">
 
           <div class="step fade-in">
+            <div class="step-icon" aria-hidden="true">📋</div>
             <div class="step-number" aria-hidden="true">01</div>
             <h3 class="step-title">Fill Out a Quick Form</h3>
+            <p class="step-desc">Tell us about your child's needs and learning goals</p>
           </div>
 
           <div class="step fade-in">
+            <div class="step-icon" aria-hidden="true">🤝</div>
             <div class="step-number" aria-hidden="true">02</div>
             <h3 class="step-title">Get Matched</h3>
+            <p class="step-desc">We pair your child with their ideal tutor</p>
           </div>
 
           <div class="step fade-in">
+            <div class="step-icon" aria-hidden="true">📚</div>
             <div class="step-number" aria-hidden="true">03</div>
             <h3 class="step-title">Start Learning</h3>
+            <p class="step-desc">Personalized sessions fit around your schedule</p>
           </div>
 
           <div class="step fade-in">
+            <div class="step-icon" aria-hidden="true">🌱</div>
             <div class="step-number" aria-hidden="true">04</div>
             <h3 class="step-title">Watch Them Grow</h3>
+            <p class="step-desc">Track progress and celebrate every victory</p>
           </div>
 
         </div>
@@ -271,7 +284,7 @@
       <div class="container founder-inner">
 
         <!-- Photo column -->
-        <div class="founder-photo fade-in">
+        <div class="founder-photo fade-in fade-in-left">
           <!--
             PHOTO PLACEHOLDER:
             Replace this div with an <img> tag when a real photo is available.
@@ -292,7 +305,7 @@
         </div>
 
         <!-- Copy column -->
-        <div class="founder-content fade-in">
+        <div class="founder-content fade-in fade-in-right">
           <span class="section-eyebrow">Meet the Founder</span>
           <h2 class="section-title" id="founder-title">Built by a Teacher</h2>
           <p class="founder-title">Lucy Kadzhikyan &mdash; 4th Grade Teacher &amp; Founder, Effective Learning Strategies</p>

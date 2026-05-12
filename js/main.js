@@ -2,10 +2,15 @@
  * Effective Learning Strategies — main.js
  *
  * Features:
- *   1. initStickyHeader   — adds box-shadow when page is scrolled
- *   2. initMobileNav      — hamburger menu toggle with accessibility support
- *   3. initSmoothScroll   — smooth anchor scrolling with header offset
- *   4. initScrollAnimations — IntersectionObserver fade-in for .fade-in elements
+ *   1. initStickyHeader      — adds box-shadow when page is scrolled
+ *   2. initMobileNav         — hamburger menu toggle with accessibility support
+ *   3. initSmoothScroll      — smooth anchor scrolling with header offset
+ *   4. initScrollAnimations  — IntersectionObserver fade-in for .fade-in elements
+ *   5. initScrollProgress    — animated scroll progress bar at top of page
+ *   6. initParticles         — floating educational symbol particles in hero
+ *   7. initCounters          — count-up animation for .counter elements
+ *   8. initCardTilt          — 3D perspective tilt on .tilt-card elements
+ *   9. initTimelineLine      — animates the How It Works connecting line
  */
 
 'use strict';
@@ -22,11 +27,7 @@ function initStickyHeader() {
   function onScroll() {
     if (!ticking) {
       window.requestAnimationFrame(function () {
-        if (window.scrollY > 10) {
-          header.classList.add('header--scrolled');
-        } else {
-          header.classList.remove('header--scrolled');
-        }
+        header.classList.toggle('header--scrolled', window.scrollY > 10);
         ticking = false;
       });
       ticking = true;
@@ -34,7 +35,6 @@ function initStickyHeader() {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  // Run once on load in case page is pre-scrolled
   onScroll();
 }
 
@@ -43,8 +43,8 @@ function initStickyHeader() {
 ───────────────────────────────────────────────────────── */
 function initMobileNav() {
   const hamburger = document.getElementById('hamburger');
-  const nav = document.getElementById('nav');
-  const navList = document.getElementById('nav-list');
+  const nav       = document.getElementById('nav');
+  const navList   = document.getElementById('nav-list');
 
   if (!hamburger || !nav) return;
 
@@ -60,43 +60,25 @@ function initMobileNav() {
     hamburger.setAttribute('aria-expanded', 'false');
   }
 
-  function toggleNav() {
-    const isOpen = nav.classList.contains('nav--open');
-    if (isOpen) {
-      closeNav();
-    } else {
-      openNav();
-    }
-  }
-
-  // Hamburger click
   hamburger.addEventListener('click', function (e) {
     e.stopPropagation();
-    toggleNav();
+    nav.classList.contains('nav--open') ? closeNav() : openNav();
   });
 
-  // Close when a nav link is clicked (especially anchor links)
   if (navList) {
     navList.addEventListener('click', function (e) {
-      const link = e.target.closest('a');
-      if (link) {
-        closeNav();
-      }
+      if (e.target.closest('a')) closeNav();
     });
   }
 
-  // Close on click outside nav
   document.addEventListener('click', function (e) {
-    if (nav.classList.contains('nav--open')) {
-      const clickedInsideNav = nav.contains(e.target);
-      const clickedHamburger = hamburger.contains(e.target);
-      if (!clickedInsideNav && !clickedHamburger) {
-        closeNav();
-      }
+    if (nav.classList.contains('nav--open') &&
+        !nav.contains(e.target) &&
+        !hamburger.contains(e.target)) {
+      closeNav();
     }
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && nav.classList.contains('nav--open')) {
       closeNav();
@@ -104,11 +86,8 @@ function initMobileNav() {
     }
   });
 
-  // Close if window resizes past mobile breakpoint
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1024) {
-      closeNav();
-    }
+    if (window.innerWidth >= 1024) closeNav();
   });
 }
 
@@ -116,49 +95,36 @@ function initMobileNav() {
    3. SMOOTH SCROLL — offset for sticky header height
 ───────────────────────────────────────────────────────── */
 function initSmoothScroll() {
-  // Get header height from CSS variable, fallback to 72px
   const headerEl = document.getElementById('header');
-  const OFFSET = headerEl ? headerEl.offsetHeight : 72;
+  const OFFSET   = headerEl ? headerEl.offsetHeight : 72;
 
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       const href = anchor.getAttribute('href');
-
-      // Ignore empty or bare "#" hrefs
       if (!href || href === '#') return;
 
       const target = document.querySelector(href);
       if (!target) return;
 
       e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - OFFSET - 12;
 
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - OFFSET - 12;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 
-      window.scrollTo({
-        top: Math.max(0, targetTop),
-        behavior: 'smooth'
-      });
-
-      // Update URL without triggering a jump
-      if (history.pushState) {
-        history.pushState(null, null, href);
-      }
+      if (history.pushState) history.pushState(null, null, href);
     });
   });
 }
 
 /* ─────────────────────────────────────────────────────────
-   4. SCROLL ANIMATIONS — fade-in on enter viewport
+   4. SCROLL ANIMATIONS — fade-in (and directional) on enter
 ───────────────────────────────────────────────────────── */
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.fade-in');
+  const elements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
   if (!elements.length) return;
 
-  // If IntersectionObserver is not supported, show all elements immediately
   if (!('IntersectionObserver' in window)) {
-    elements.forEach(function (el) {
-      el.classList.add('is-visible');
-    });
+    elements.forEach(function (el) { el.classList.add('is-visible'); });
     return;
   }
 
@@ -167,27 +133,177 @@ function initScrollAnimations() {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target); // Animate once only
+          observer.unobserve(entry.target);
         }
       });
     },
-    {
-      threshold: 0.12,       // Trigger when 12% of element is visible
-      rootMargin: '0px 0px -40px 0px'  // Slight bottom offset for cleaner feel
-    }
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
   );
 
-  elements.forEach(function (el) {
+  elements.forEach(function (el) { observer.observe(el); });
+}
+
+/* ─────────────────────────────────────────────────────────
+   5. SCROLL PROGRESS BAR
+───────────────────────────────────────────────────────── */
+function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+
+  let ticking = false;
+
+  function update() {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        const scrollTop  = window.scrollY;
+        const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+        const progress   = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width  = progress + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+/* ─────────────────────────────────────────────────────────
+   6. EDUCATIONAL PARTICLES — floating symbols in hero
+───────────────────────────────────────────────────────── */
+function initParticles() {
+  const container = document.getElementById('hero-particles');
+  if (!container) return;
+
+  const symbols = ['📚', '✏️', '⭐', '💡', '🎓', '🔬', '📐', '📝', '🏆', '🌱', '🔭', '🧮'];
+  const count   = window.innerWidth < 768 ? 8 : 14;
+
+  for (var i = 0; i < count; i++) {
+    var p = document.createElement('span');
+    p.className   = 'edu-particle';
+    p.textContent = symbols[i % symbols.length];
+    p.setAttribute('aria-hidden', 'true');
+
+    var leftPct  = (Math.random() * 92 + 2).toFixed(1) + '%';
+    var topPct   = (Math.random() * 75 + 10).toFixed(1) + '%';
+    var dur      = (Math.random() * 7 + 7).toFixed(1) + 's';
+    var delay    = (Math.random() * -12).toFixed(1) + 's';
+    var size     = (Math.random() * 0.7 + 1.0).toFixed(2) + 'rem';
+
+    p.style.left     = leftPct;
+    p.style.top      = topPct;
+    p.style.fontSize = size;
+    p.style.setProperty('--dur',   dur);
+    p.style.setProperty('--delay', delay);
+
+    container.appendChild(p);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   7. COUNTER ANIMATION — count up to data-target value
+───────────────────────────────────────────────────────── */
+function initCounters() {
+  const counters = document.querySelectorAll('.counter[data-target]');
+  if (!counters.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(function (el) { el.textContent = el.dataset.target; });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el       = entry.target;
+      var target   = parseInt(el.dataset.target, 10);
+      var duration = 1800;
+      var start    = performance.now();
+
+      function tick(now) {
+        var elapsed  = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased    = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = target;
+        }
+      }
+
+      requestAnimationFrame(tick);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  counters.forEach(function (el) {
+    el.textContent = '0';
     observer.observe(el);
   });
 }
 
 /* ─────────────────────────────────────────────────────────
-   BOOT — run all init functions after DOM is ready
+   8. CARD TILT — 3D perspective tilt on hover
+───────────────────────────────────────────────────────── */
+function initCardTilt() {
+  var cards = document.querySelectorAll('.tilt-card');
+  if (!cards.length) return;
+
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  cards.forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var rect    = card.getBoundingClientRect();
+      var x       = e.clientX - rect.left;
+      var y       = e.clientY - rect.top;
+      var cx      = rect.width  / 2;
+      var cy      = rect.height / 2;
+      var rotateX = ((y - cy) / cy) * -5;
+      var rotateY = ((x - cx) / cx) *  5;
+
+      card.style.transform =
+        'perspective(900px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-6px)';
+    });
+
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────────────────
+   9. TIMELINE LINE — animate How It Works connector
+───────────────────────────────────────────────────────── */
+function initTimelineLine() {
+  var stepsEl = document.querySelector('.how-steps');
+  if (!stepsEl) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        stepsEl.classList.add('timeline-visible');
+        observer.unobserve(stepsEl);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  observer.observe(stepsEl);
+}
+
+/* ─────────────────────────────────────────────────────────
+   BOOT — run all after DOM is ready
 ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
   initStickyHeader();
   initMobileNav();
   initSmoothScroll();
   initScrollAnimations();
+  initScrollProgress();
+  initParticles();
+  initCounters();
+  initCardTilt();
+  initTimelineLine();
 });
