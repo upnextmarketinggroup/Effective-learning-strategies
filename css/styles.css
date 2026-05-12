@@ -847,6 +847,7 @@ p { line-height: 1.7; }
   align-items: center;
   text-align: center;
   position: relative;
+  z-index: 1;
 }
 
 .step-number {
