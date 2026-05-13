@@ -27,6 +27,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 img, svg {
@@ -1551,6 +1552,48 @@ p { line-height: 1.7; }
   :root { --container-pad: var(--space-8); }
   .hero-headline { font-size: var(--fs-5xl); }
   .hero { padding: var(--space-20) 0 var(--space-24); }
+}
+
+/* ── Mobile: Header & Global ── */
+@media (max-width: 767px) {
+  /* Prevent any horizontal scrollbar site-wide */
+  body { overflow-x: hidden; }
+
+  /* Tighten container sides so header has more room */
+  :root { --container-pad: var(--space-4); }
+
+  /* Reduce gaps between header items */
+  .header-inner { gap: var(--space-3); }
+
+  /* Allow logo to shrink when screen is narrow */
+  .header-logo {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Truncate long logo text rather than pushing things off-screen */
+  .header-logo-text {
+    font-size: var(--fs-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Nav takes no horizontal space in the row on mobile;
+     the open list is absolutely positioned so it still appears correctly */
+  .nav { flex: 0; min-width: 0; }
+
+  /* Keep actions block from shrinking and compact the button */
+  .header-actions {
+    flex-shrink: 0;
+    gap: var(--space-2);
+  }
+
+  .header-actions .btn--sm {
+    font-size: var(--fs-xs);
+    padding: 0.35rem 0.75rem;
+  }
 }
 
 /* ── Mobile: Getting Started Is Easy ── */
