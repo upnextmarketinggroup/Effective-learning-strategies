@@ -120,7 +120,7 @@ function initSmoothScroll() {
    4. SCROLL ANIMATIONS — fade-in (and directional) on enter
 ───────────────────────────────────────────────────────── */
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+  const elements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .logo-anim');
   if (!elements.length) return;
 
   if (!('IntersectionObserver' in window)) {
