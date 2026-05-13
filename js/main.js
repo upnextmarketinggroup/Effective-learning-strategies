@@ -294,6 +294,37 @@ function initTimelineLine() {
 }
 
 /* ─────────────────────────────────────────────────────────
+   SCHEDULE GRADE FILTER — Classes page
+───────────────────────────────────────────────────────── */
+function initScheduleFilter() {
+  var buttons = document.querySelectorAll('.schedule-filter-btn');
+  var table = document.querySelector('.schedule-table');
+  if (!buttons.length || !table) return;
+
+  var cells = table.querySelectorAll('tbody td[data-grade]');
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.getAttribute('data-grade-filter');
+
+      buttons.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+
+      if (target === 'all') {
+        table.classList.remove('is-filtering');
+        cells.forEach(function (c) { c.classList.remove('is-highlight'); });
+        return;
+      }
+
+      table.classList.add('is-filtering');
+      cells.forEach(function (c) {
+        c.classList.toggle('is-highlight', c.getAttribute('data-grade') === target);
+      });
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────────────────
    BOOT — run all after DOM is ready
 ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
@@ -306,4 +337,5 @@ document.addEventListener('DOMContentLoaded', function () {
   initCounters();
   initCardTilt();
   initTimelineLine();
+  initScheduleFilter();
 });
