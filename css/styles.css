@@ -784,6 +784,89 @@ p { line-height: 1.7; }
   display: block;
 }
 
+/* ── Hero animated logo ── */
+.hero-illustration-bg--logo {
+  background: #fafaf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-anim {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-4);
+}
+
+.logo-anim__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* Book pages — start collapsed at spine, fan open when visible */
+.logo-anim__page {
+  transform-box: view-box;
+  transform-origin: 200px 312px;
+  transform: rotate(0deg);
+  transition: transform 1s cubic-bezier(.22,.9,.32,1);
+}
+
+.logo-anim.is-visible .logo-anim__page--l1 { transform: rotate(-18deg); transition-delay: .15s; }
+.logo-anim.is-visible .logo-anim__page--l2 { transform: rotate(-34deg); transition-delay: .22s; }
+.logo-anim.is-visible .logo-anim__page--l3 { transform: rotate(-52deg); transition-delay: .29s; }
+.logo-anim.is-visible .logo-anim__page--l4 { transform: rotate(-72deg); transition-delay: .36s; }
+.logo-anim.is-visible .logo-anim__page--r1 { transform: rotate(18deg);  transition-delay: .15s; }
+.logo-anim.is-visible .logo-anim__page--r2 { transform: rotate(34deg);  transition-delay: .22s; }
+.logo-anim.is-visible .logo-anim__page--r3 { transform: rotate(52deg);  transition-delay: .29s; }
+.logo-anim.is-visible .logo-anim__page--r4 { transform: rotate(72deg);  transition-delay: .36s; }
+
+/* Binding fades in alongside the pages */
+.logo-anim__binding {
+  opacity: 0;
+  transition: opacity .6s ease .1s;
+}
+.logo-anim.is-visible .logo-anim__binding { opacity: 1; }
+
+/* Tree — grows from the spine after the book opens */
+.logo-anim__tree {
+  transform-box: view-box;
+  transform-origin: 200px 300px;
+  transform: scale(0.02);
+  opacity: 0;
+  transition: transform 1.4s cubic-bezier(.18,1.05,.4,1) 1.1s, opacity .5s linear 1.1s;
+}
+.logo-anim.is-visible .logo-anim__tree {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Individual leaves get a soft pop after the tree grows */
+.logo-anim__leaf {
+  transform-box: view-box;
+  transform-origin: center;
+  opacity: 0;
+  transition: opacity .5s ease 1.6s;
+}
+.logo-anim.is-visible .logo-anim__leaf { opacity: 1; }
+
+/* Curved title fades in last */
+.logo-anim__text {
+  opacity: 0;
+  transition: opacity .9s ease 2.3s;
+}
+.logo-anim.is-visible .logo-anim__text { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-anim__page,
+  .logo-anim__tree,
+  .logo-anim__leaf,
+  .logo-anim__text,
+  .logo-anim__binding { transition: none; }
+}
+
 /* Illustration center graphic */
 .hero-illus-center {
   position: absolute;

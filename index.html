@@ -108,8 +108,57 @@
         <!-- Right: illustration -->
         <div class="hero-visual" aria-hidden="true">
           <div class="hero-illustration">
-            <div class="hero-illustration-bg">
-              <img src="images/tutoring-session.jpg" alt="Tutor working one-on-one with a student" class="hero-illus-img">
+            <div class="hero-illustration-bg hero-illustration-bg--logo">
+              <div class="logo-anim" role="img" aria-label="Effective Learning Strategies — animated logo">
+                <svg class="logo-anim__svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <defs>
+                    <path id="logoArcTop" d="M 60,220 A 150,150 0 0 1 340,220" fill="none"/>
+                  </defs>
+
+                  <!-- Curved title -->
+                  <text class="logo-anim__text" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" letter-spacing="3" fill="#1c1c1c">
+                    <textPath href="#logoArcTop" startOffset="50%" text-anchor="middle">EFFECTIVE LEARNING STRATEGIES</textPath>
+                  </text>
+
+                  <!-- Tree (grows out of the book) -->
+                  <g class="logo-anim__tree">
+                    <!-- Trunk -->
+                    <path class="logo-anim__trunk" d="M 197,295 L 197,150 Q 200,140 203,150 L 203,295 Z" fill="#3A5E43"/>
+                    <!-- Top leaf -->
+                    <path class="logo-anim__leaf logo-anim__leaf--top" d="M 200,70 Q 218,110 200,160 Q 182,110 200,70 Z" fill="#4E7C59"/>
+                    <!-- Branch leaves left -->
+                    <ellipse class="logo-anim__leaf" cx="170" cy="120" rx="20" ry="12" transform="rotate(-30 170 120)" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="155" cy="155" rx="22" ry="13" transform="rotate(-25 155 155)" fill="#4E7C59"/>
+                    <ellipse class="logo-anim__leaf" cx="150" cy="195" rx="24" ry="14" transform="rotate(-30 150 195)" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="160" cy="230" rx="22" ry="13" transform="rotate(-35 160 230)" fill="#4E7C59"/>
+                    <ellipse class="logo-anim__leaf" cx="175" cy="265" rx="20" ry="12" transform="rotate(-40 175 265)" fill="#76A77F"/>
+                    <!-- Branch leaves right -->
+                    <ellipse class="logo-anim__leaf" cx="230" cy="120" rx="20" ry="12" transform="rotate(30 230 120)" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="245" cy="155" rx="22" ry="13" transform="rotate(25 245 155)" fill="#4E7C59"/>
+                    <ellipse class="logo-anim__leaf" cx="250" cy="195" rx="24" ry="14" transform="rotate(30 250 195)" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="240" cy="230" rx="22" ry="13" transform="rotate(35 240 230)" fill="#4E7C59"/>
+                    <ellipse class="logo-anim__leaf" cx="225" cy="265" rx="20" ry="12" transform="rotate(40 225 265)" fill="#76A77F"/>
+                    <!-- Center accent leaves -->
+                    <ellipse class="logo-anim__leaf" cx="200" cy="100" rx="12" ry="20" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="188" cy="175" rx="10" ry="18" transform="rotate(-15 188 175)" fill="#76A77F"/>
+                    <ellipse class="logo-anim__leaf" cx="212" cy="175" rx="10" ry="18" transform="rotate(15 212 175)" fill="#76A77F"/>
+                  </g>
+
+                  <!-- Book pages (fan open from spine) -->
+                  <g class="logo-anim__book" fill="#111">
+                    <rect class="logo-anim__page logo-anim__page--l1" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--l2" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--l3" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--l4" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--r1" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--r2" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--r3" x="197" y="200" width="6" height="100" rx="2"/>
+                    <rect class="logo-anim__page logo-anim__page--r4" x="197" y="200" width="6" height="100" rx="2"/>
+                    <!-- Binding base -->
+                    <path class="logo-anim__binding" d="M 110,305 Q 200,330 290,305 L 290,318 Q 200,343 110,318 Z"/>
+                  </g>
+                </svg>
+              </div>
             </div>
 
             <!-- Floating stat card -->
