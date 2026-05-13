@@ -1015,8 +1015,8 @@ p { line-height: 1.7; }
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scale(1.25);
-  transform-origin: center center;
+  transform: scale(1.4);
+  transform-origin: center bottom;
 }
 
 @media (min-width: 768px) {
