@@ -1015,7 +1015,7 @@ p { line-height: 1.7; }
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scale(1.4);
+  transform: scale(1.1);
   transform-origin: center bottom;
 }
 
