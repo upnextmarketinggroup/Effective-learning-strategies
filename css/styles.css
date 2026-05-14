@@ -1577,7 +1577,9 @@ p { line-height: 1.7; }
 .program-card {
   display: flex;
   flex-direction: column;
-  padding: var(--space-6);
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8);
   position: relative;
 }
 
@@ -1604,18 +1606,20 @@ p { line-height: 1.7; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-md);
-  background: #f3f4f6;
-  color: #9ca3af;
-  margin-bottom: var(--space-4);
+  width: 60px;
+  height: 60px;
+  background: none;
+  margin-bottom: var(--space-5);
   flex-shrink: 0;
 }
 
 .program-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 54px;
+  height: 54px;
+}
+
+.program-card-features {
+  text-align: left;
 }
 
 .program-card-title {
