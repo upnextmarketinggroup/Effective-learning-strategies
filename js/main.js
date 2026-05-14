@@ -325,6 +325,43 @@ function initScheduleFilter() {
 }
 
 /* ─────────────────────────────────────────────────────────
+   PROGRAMS CAROUSEL — auto-demo scroll on first reveal
+───────────────────────────────────────────────────────── */
+function initProgramsCarousel() {
+  var carousels = document.querySelectorAll('.programs-grid');
+  if (!carousels.length || !('IntersectionObserver' in window)) return;
+
+  var prefersReduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  carousels.forEach(function (carousel) {
+    var done = false;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || done) return;
+        done = true;
+        observer.unobserve(carousel);
+        if (prefersReduced) return;
+
+        var firstCard = carousel.querySelector('.program-card');
+        if (!firstCard) return;
+        var peek = Math.round(firstCard.offsetWidth * 0.55);
+
+        setTimeout(function () {
+          carousel.scrollTo({ left: peek, behavior: 'smooth' });
+          setTimeout(function () {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          }, 950);
+        }, 450);
+      });
+    }, { threshold: 0.35 });
+
+    observer.observe(carousel);
+  });
+}
+
+/* ─────────────────────────────────────────────────────────
    BOOT — run all after DOM is ready
 ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
@@ -338,4 +375,5 @@ document.addEventListener('DOMContentLoaded', function () {
   initCardTilt();
   initTimelineLine();
   initScheduleFilter();
+  initProgramsCarousel();
 });
