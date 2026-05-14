@@ -1931,7 +1931,7 @@ p { line-height: 1.7; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
 
   /* Programs card grid */
-  .programs-grid { grid-template-columns: repeat(3, 1fr); }
+  .programs-grid { grid-template-columns: repeat(2, 1fr); }
   .programs-cta { flex-direction: row; justify-content: center; }
 
   /* How steps */
@@ -1984,6 +1984,9 @@ p { line-height: 1.7; }
 
   /* Grade grid: 5 across on desktop */
   .grade-grid { grid-template-columns: repeat(5, 1fr); }
+
+  /* Programs card grid: 4 across on desktop */
+  .programs-grid { grid-template-columns: repeat(4, 1fr); }
 
   /* Section padding */
   .section { padding: var(--space-24) 0; }
