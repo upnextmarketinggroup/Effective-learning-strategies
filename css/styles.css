@@ -1624,28 +1624,37 @@ p { line-height: 1.7; }
 
 .program-card-title {
   font-family: var(--font-heading);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-2xl);
   font-weight: 800;
   color: var(--color-text-dark);
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-3);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .program-card-price {
   margin-bottom: var(--space-5);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-1);
 }
 
 .program-card-amount {
   font-family: var(--font-heading);
-  font-size: var(--fs-3xl);
+  font-size: var(--fs-4xl);
   font-weight: 800;
-  color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #68a878 0%, #3A5E43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
 }
 
 .program-card-unit {
-  font-size: var(--fs-base);
-  color: var(--color-text-dark);
+  font-size: var(--fs-md);
+  color: var(--color-text-body);
   font-weight: 600;
-  margin-left: var(--space-1);
 }
 
 .program-card-features {
@@ -1659,8 +1668,8 @@ p { line-height: 1.7; }
 }
 
 .program-card-features li {
-  font-size: var(--fs-base);
-  font-weight: 600;
+  font-size: var(--fs-md);
+  font-weight: 700;
   color: var(--color-text-dark);
   display: flex;
   align-items: flex-start;
