@@ -325,7 +325,7 @@ function initScheduleFilter() {
 }
 
 /* ─────────────────────────────────────────────────────────
-   PROGRAMS CAROUSEL — peek opacity + one-shot auto-scroll
+   PROGRAMS CAROUSEL — peek opacity + arrows (desktop) + auto-scroll
 ───────────────────────────────────────────────────────── */
 function initProgramsCarousel() {
   var carousels = document.querySelectorAll('.programs-grid');
@@ -335,6 +335,40 @@ function initProgramsCarousel() {
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   carousels.forEach(function (carousel) {
+    /* ── wrap + inject arrow buttons ── */
+    var wrap = document.createElement('div');
+    wrap.className = 'programs-carousel-wrap';
+    carousel.parentNode.insertBefore(wrap, carousel);
+    wrap.appendChild(carousel);
+
+    function makeArrow(dir) {
+      var btn = document.createElement('button');
+      btn.className = 'carousel-arrow carousel-arrow--' + dir;
+      btn.setAttribute('aria-label', dir === 'prev' ? 'Previous programs' : 'Next programs');
+      btn.innerHTML = dir === 'prev'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+      wrap.appendChild(btn);
+      return btn;
+    }
+
+    var prevBtn = makeArrow('prev');
+    var nextBtn = makeArrow('next');
+
+    function cardStep() {
+      var card = carousel.querySelector('.program-card');
+      var gap = parseFloat(getComputedStyle(carousel).columnGap) || 20;
+      return card ? card.offsetWidth + gap : 320;
+    }
+
+    prevBtn.addEventListener('click', function () {
+      carousel.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function () {
+      carousel.scrollBy({ left: cardStep(), behavior: 'smooth' });
+    });
+
+    /* ── opacity for peeking cards ── */
     function updateOpacity() {
       var cLeft = carousel.getBoundingClientRect().left;
       var cRight = carousel.getBoundingClientRect().right;
@@ -345,10 +379,27 @@ function initProgramsCarousel() {
       });
     }
 
-    carousel.addEventListener('scroll', updateOpacity, { passive: true });
-    window.addEventListener('resize', updateOpacity, { passive: true });
-    updateOpacity();
+    /* ── arrow visibility ── */
+    function updateArrows() {
+      var atStart = carousel.scrollLeft <= 5;
+      var atEnd = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5;
+      prevBtn.hidden = atStart;
+      nextBtn.hidden = atEnd;
+    }
 
+    carousel.addEventListener('scroll', function () {
+      updateOpacity();
+      updateArrows();
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      updateOpacity();
+      updateArrows();
+    }, { passive: true });
+
+    updateOpacity();
+    updateArrows();
+
+    /* ── one-shot auto-scroll on first reveal ── */
     if (prefersReduced || !('IntersectionObserver' in window)) return;
 
     var done = false;
