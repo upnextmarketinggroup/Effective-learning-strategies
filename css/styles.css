@@ -1576,13 +1576,11 @@ p { line-height: 1.7; }
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-padding-inline: 9%;
   padding: var(--space-2) 9% var(--space-6);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
 .programs-grid::-webkit-scrollbar { display: none; }
 .programs-grid > * {
@@ -1598,6 +1596,7 @@ p { line-height: 1.7; }
   text-align: center;
   padding: var(--space-10) var(--space-8);
   position: relative;
+  transition: opacity 0.35s ease;
 }
 
 .program-card--featured {
@@ -2004,8 +2003,9 @@ p { line-height: 1.7; }
 
   /* Programs carousel — 2-per-view on tablet */
   .programs-grid {
-    grid-auto-columns: calc((100% - 12% - 2 * var(--space-5)) / 2);
+    grid-auto-columns: calc((100% - 12% - var(--space-5) - 40px) / 2);
     padding-inline: 6%;
+    scroll-padding-inline: 6%;
   }
   .programs-cta { flex-direction: row; justify-content: center; }
 
@@ -2062,8 +2062,9 @@ p { line-height: 1.7; }
 
   /* Programs carousel — 3-per-view on desktop */
   .programs-grid {
-    grid-auto-columns: calc((100% - 8% - 3 * var(--space-5)) / 3);
+    grid-auto-columns: calc((100% - 8% - 2 * var(--space-5) - 40px) / 3);
     padding-inline: 4%;
+    scroll-padding-inline: 4%;
   }
 
   /* Section padding */

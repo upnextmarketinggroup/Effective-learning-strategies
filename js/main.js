@@ -325,39 +325,49 @@ function initScheduleFilter() {
 }
 
 /* ─────────────────────────────────────────────────────────
-   PROGRAMS CAROUSEL — auto-demo scroll on first reveal
+   PROGRAMS CAROUSEL — peek opacity + one-shot auto-scroll
 ───────────────────────────────────────────────────────── */
 function initProgramsCarousel() {
   var carousels = document.querySelectorAll('.programs-grid');
-  if (!carousels.length || !('IntersectionObserver' in window)) return;
+  if (!carousels.length) return;
 
   var prefersReduced = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   carousels.forEach(function (carousel) {
-    var done = false;
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting || done) return;
-        done = true;
-        observer.unobserve(carousel);
-        if (prefersReduced) return;
-
-        var firstCard = carousel.querySelector('.program-card');
-        if (!firstCard) return;
-        var peek = Math.round(firstCard.offsetWidth * 0.55);
-
-        setTimeout(function () {
-          carousel.scrollTo({ left: peek, behavior: 'smooth' });
-          setTimeout(function () {
-            carousel.scrollTo({ left: 0, behavior: 'smooth' });
-          }, 950);
-        }, 450);
+    function updateOpacity() {
+      var cLeft = carousel.getBoundingClientRect().left;
+      var cRight = carousel.getBoundingClientRect().right;
+      carousel.querySelectorAll('.program-card').forEach(function (card) {
+        var r = card.getBoundingClientRect();
+        var visible = Math.max(0, Math.min(r.right, cRight) - Math.max(r.left, cLeft));
+        card.style.opacity = (visible / r.width) > 0.55 ? '1' : '0.35';
       });
-    }, { threshold: 0.35 });
+    }
 
-    observer.observe(carousel);
+    carousel.addEventListener('scroll', updateOpacity, { passive: true });
+    window.addEventListener('resize', updateOpacity, { passive: true });
+    updateOpacity();
+
+    if (prefersReduced || !('IntersectionObserver' in window)) return;
+
+    var done = false;
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting || done) return;
+      done = true;
+      io.disconnect();
+      var card = carousel.querySelector('.program-card');
+      if (!card) return;
+      var dist = Math.round(card.offsetWidth * 0.6);
+      setTimeout(function () {
+        carousel.scrollTo({ left: dist, behavior: 'smooth' });
+        setTimeout(function () {
+          carousel.scrollTo({ left: 0, behavior: 'smooth' });
+        }, 900);
+      }, 400);
+    }, { threshold: 0.4 });
+
+    io.observe(carousel);
   });
 }
 
