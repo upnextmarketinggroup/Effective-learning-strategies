@@ -2162,9 +2162,6 @@ p { line-height: 1.7; }
 
 /* ── Mobile: Getting Started Is Easy ── */
 @media (max-width: 767px) {
-  /* Hide logo and hamburger on mobile — show only the Enroll Now button */
-  .hamburger        { display: none; }
-  .nav              { display: none; }
   .header-inner     { justify-content: space-between; }
   .header-logo-text { display: none; }
   .header-logo-img  { height: 52px; max-height: 52px; max-width: 160px; }
