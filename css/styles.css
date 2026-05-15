@@ -2045,7 +2045,7 @@ p { line-height: 1.7; }
   /* Programs / Classes */
   .grade-grid { grid-template-columns: repeat(3, 1fr); }
   .programs-cta { flex-direction: row; justify-content: center; gap: var(--space-10); }
-  .cta-inline-actions { flex-direction: row; }
+  .cta-inline-actions { flex-direction: row; justify-content: center; }
 }
 
 /* ── 1024px Desktop ── */
