@@ -1762,6 +1762,12 @@ p { line-height: 1.7; }
   flex-shrink: 0;
 }
 
+/* After School Care cards carry less text than the other programs,
+   so their feature lines step up one size on the shared scale. */
+#after-school .program-card-features li {
+  font-size: var(--fs-lg);
+}
+
 /* Gradient green button */
 .btn--gradient {
   background: linear-gradient(135deg, #68a878 0%, #3A5E43 100%);
