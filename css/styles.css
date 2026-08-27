@@ -1487,10 +1487,6 @@ p { line-height: 1.7; }
   /* Same as why-grid but never goes to 4 cols */
 }
 
-.why-grid--two {
-  /* Same as why-grid but never goes past 2 cols */
-}
-
 /* ─── 13b. PROGRAMS / CLASSES ─────────────────────────────
    Homepage Programs section + Classes page editorial list.
 ─────────────────────────────────────────────────────────── */
@@ -2061,7 +2057,6 @@ p { line-height: 1.7; }
   .why-grid { grid-template-columns: repeat(4, 1fr); }
   /* Tutors philosophy grid: max 3 cols */
   .why-grid--three { grid-template-columns: repeat(3, 1fr); }
-  .why-grid--two { grid-template-columns: repeat(2, 1fr); }
 
   /* Founder photo larger */
   .founder-inner { grid-template-columns: 300px 1fr; }
